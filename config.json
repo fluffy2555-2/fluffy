@@ -1,0 +1,71 @@
+{
+  "project_name": "図面拾いツール",
+  "version": "1.0.0",
+  "default_scale": 0.01,
+  "units": {
+    "length": "mm",
+    "area": "m²",
+    "count": "個"
+  },
+  "extraction_patterns": {
+    "length": [
+      "(\\d+[,\\.]?\\d*)\\s*(mm|m|cm)",
+      "(\\d+[,\\.]?\\d*)\\s*ミリ",
+      "(\\d+[,\\.]?\\d*)\\s*メートル"
+    ],
+    "area": [
+      "(\\d+[,\\.]?\\d*)\\s*(㎡|m2|m²|平米)",
+      "(\\d+[,\\.]?\\d*)\\s*平方メートル"
+    ],
+    "count": [
+      "(\\d+)\\s*(個|箇所|ヶ所|本|枚)"
+    ]
+  },
+  "output_formats": {
+    "json": {
+      "enabled": true,
+      "indent": 2,
+      "ensure_ascii": false
+    },
+    "csv": {
+      "enabled": true,
+      "encoding": "utf-8",
+      "delimiter": ","
+    }
+  },
+  "pdf_settings": {
+    "extract_text": true,
+    "extract_images": false,
+    "page_range": null
+  },
+  "image_settings": {
+    "ocr_enabled": true,
+    "ocr_languages": ["jpn", "eng"],
+    "line_detection_threshold": 100,
+    "min_line_length": 50
+  },
+  "room_types": [
+    "リビング",
+    "ダイニング",
+    "キッチン",
+    "寝室",
+    "子供部屋",
+    "書斎",
+    "浴室",
+    "洗面所",
+    "トイレ",
+    "玄関",
+    "廊下",
+    "階段",
+    "バルコニー",
+    "収納"
+  ],
+  "standard_dimensions": {
+    "天井高": 2400,
+    "廊下幅": 900,
+    "階段幅": 900,
+    "ドア幅": 800,
+    "ドア高さ": 2000,
+    "窓高さ": 1200
+  }
+}

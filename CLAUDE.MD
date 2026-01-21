@@ -4,9 +4,12 @@ This file contains instructions and context for Claude Code to help understand a
 
 ## Project Overview
 
-**Project Name:** fluffy
+**Project Name:** 図面拾いツール (Drawing Extraction Tool)
 
-This is the main repository for the fluffy project.
+This is a Python-based tool for automatically extracting dimensions, areas, and quantities from architectural drawings. It supports PDF files, images, and manual input, with OCR capabilities for text recognition.
+
+**Primary Language:** Python
+**Domain:** Construction/Architecture - Quantity Takeoff (積算)
 
 ## Development Guidelines
 
@@ -31,10 +34,46 @@ This is the main repository for the fluffy project.
 
 ```
 fluffy/
-├── README.md          # Project documentation
-├── CLAUDE.MD          # This file - instructions for Claude Code
-└── .git/              # Git repository
+├── README.md                    # Project documentation (Japanese)
+├── CLAUDE.MD                    # This file - instructions for Claude Code
+├── requirements.txt             # Python dependencies
+├── config.json                  # Configuration file for the tool
+├── drawing_extractor.py         # Main drawing extraction tool
+├── image_extractor.py           # Image processing and OCR extension
+├── example_basic.py             # Usage examples and demonstrations
+├── .gitignore                   # Git ignore file
+└── .git/                        # Git repository
 ```
+
+## Key Components
+
+### drawing_extractor.py
+- Core drawing extraction functionality
+- Measurement data classes and enums
+- Text-based dimension extraction using regex
+- PDF processing with PyPDF2/pdfplumber
+- Area, perimeter, and count calculations
+- JSON and CSV export functionality
+
+### image_extractor.py
+- Image-based drawing processing
+- OCR capabilities (pytesseract, easyocr)
+- Line detection using OpenCV
+- Visual detection result overlay
+- Extends DrawingExtractor base class
+
+### example_basic.py
+- Three comprehensive usage examples
+- Manual input example
+- Text extraction example
+- Construction quantity takeoff example
+
+### config.json
+- Default scale settings
+- Unit definitions
+- Extraction regex patterns
+- Output format configurations
+- Standard dimensions for common elements
 
 ## Notes for Claude Code
 
@@ -50,11 +89,61 @@ fluffy/
 - Repository: fluffy
 - Development branch pattern: `claude/*`
 
-## Additional Context
+## Dependencies
 
-This file should be updated as the project grows to include:
-- Dependencies and setup instructions
-- Build and deployment procedures
-- API documentation
-- Architecture decisions
-- Common troubleshooting steps
+### Required (Basic)
+- PyPDF2 or pdfplumber: PDF processing
+
+### Optional (Full Features)
+- Pillow: Image file handling
+- opencv-python: Line detection and image processing
+- pytesseract or easyocr: OCR for text extraction from images
+- numpy, pandas: Data processing
+
+## Usage Patterns
+
+### Basic Workflow
+1. Initialize extractor with scale (e.g., 1/100 = 0.01)
+2. Extract measurements from text/PDF/image
+3. Add manual calculations if needed
+4. Export results to JSON/CSV
+
+### Scale Settings
+- 1/100 scale: `scale=0.01`
+- 1/50 scale: `scale=0.02`
+- 1/200 scale: `scale=0.005`
+
+## Architecture Decisions
+
+### Object-Oriented Design
+- Base class `DrawingExtractor` for core functionality
+- Extended classes `PDFDrawingExtractor` and `ImageDrawingExtractor`
+- Dataclass `Measurement` for type-safe measurement storage
+- Enum `MeasurementType` for measurement categorization
+
+### Measurement Types
+1. LENGTH: Linear measurements in mm
+2. AREA: Surface area in m²
+3. COUNT: Quantity counts (integer values)
+4. PERIMETER: Perimeter calculations in mm
+
+### Text Extraction Patterns
+Uses regex to match common Japanese construction notation:
+- Lengths: "3,000mm", "3.5m"
+- Areas: "15.5㎡", "15.5m²"
+- Mixed metric units with automatic conversion
+
+## Common Use Cases
+
+1. **Residential Floor Plans**: Room areas, wall lengths, equipment counts
+2. **Construction Estimates**: Material quantity calculations
+3. **Renovation Projects**: Existing building measurements
+
+## Testing
+
+Run the example script to verify functionality:
+```bash
+python example_basic.py
+```
+
+This will generate sample JSON and CSV outputs for verification.
